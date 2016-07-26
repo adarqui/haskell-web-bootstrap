@@ -4,7 +4,7 @@
 
 Bootstrap(3) classes and utilities for Haskell. This library is a direct port of purescript's purescript-halogen-bootsrap.
 
-# example
+## Example
 
 An example code snippet mixing Web.Bootstrap (B.) with React Flux (react-flux).
 
@@ -44,6 +44,6 @@ createTagsField label tags current_tag set_tag_handler add_tag_handler delete_ta
       ) $ toSeqList tags
 ```
 
-## contributions
+## Contributions
 
 Pull requests welcome!
