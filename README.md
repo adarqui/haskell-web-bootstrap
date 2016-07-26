@@ -11,37 +11,23 @@ An example code snippet mixing Web.Bootstrap (B.) with React Flux (react-flux).
 ```haskell
 import qualified Web.Bootstrap3 as B
 
-createTagsField
-  :: Text
-  -> [Text]
-  -> Text
-  -> (Text -> ViewEventHandler) -- ^ set current tag
-  -> ViewEventHandler           -- ^ add current tag
-  -> (Int -> ViewEventHandler)  -- ^ delete tag
-  -> ViewEventHandler           -- ^ clear tags
-  -> HTMLView_
-
-createTagsField label tags current_tag set_tag_handler add_tag_handler delete_tag_handler clear_tags_handler = do
-  cldiv_ B.inputGroup $ do
-    label_ $ elemText label
-    input_ [ className_ B.formControl
-           , "value" $= textToJSString' current_tag
-           , onChange (set_tag_handler . targetValue)
-           , onKeyUp (\_ KeyboardEvent{..} -> if keyCode == 13 then add_tag_handler else mempty)
-           ]
-    span_ [ className_ B.inputGroupBtn
-          , "title" $= "Add"
-          , onClick (\_ _ -> add_tag_handler)
-          ] $ elemText "Add"
-
-  div_ $ do
-    mapM_ (\(idx, tag) -> do
-      span_ [classNames_ [B.label, B.labelDefault]] $ elemText tag
-      span_ [] $ do
-        button_ [ classNames_ [B.btn, B.btnDefault, B.btnXs]
-                , onClick (\_ _ -> delete_tag_handler idx)
-                ] $ span_ [classNames_ [B.glyphicon, B.glyphiconRemove]] $ elemText "✖"
-      ) $ toSeqList tags
+viewIndex :: Store -> HTMLView_
+viewIndex Store{..} = do
+  Loading.loader1 _organizations $ \organizations -> do
+    div_ [className_ B.containerFluid] $ do
+      h1_ "Organizations"
+      ahref $ routeWith' $ Organizations New
+      PageNumbers.view_ (_pageInfo, routeWith' $ Organizations Index)
+      ul_ [className_ B.listUnstyled] $ do
+        mapM_ (\OrganizationPackResponse{..} -> do
+          let organization = organizationPackResponseOrganization
+          li_ $ do
+            div_ [className_ B.row] $ do
+              div_ [className_ B.colXs1] $ p_ $ Gravatar.viewUser_ XSmall organizationPackResponseUser
+              div_ [className_ B.colXs3] $ p_ $ ahrefName (organizationResponseDisplayName organization) (routeWith' $ Organizations (ShowS $ organizationResponseName organization))
+              div_ [className_ B.colXs6] $ p_ $ elemText $ maybe "No Description." id (organizationResponseDescription organization)
+              div_ [className_ B.colXs2] $ p_ $ elemText $ prettyUTCTimeMaybe $ organizationResponseCreatedAt organization
+          ) organizations
 ```
 
 ## Contributions
