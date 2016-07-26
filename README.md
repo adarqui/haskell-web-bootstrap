@@ -22,7 +22,7 @@ createTagsField
 createTagsField label tags current_tag set_tag_handler add_tag_handler delete_tag_handler clear_tags_handler = do
   cldiv_ B.inputGroup $ do
     label_ $ elemText label
-    input_ [ classNames_ formControlClasses
+    input_ [ className_ B.formControl
            , "value" $= textToJSString' current_tag
            , onChange (set_tag_handler . targetValue)
            , onKeyUp (\_ KeyboardEvent{..} -> if keyCode == 13 then add_tag_handler else mempty)
