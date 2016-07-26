@@ -1,6 +1,6 @@
 # haskell-web-bootstrap
 
-Bootstrap(3) classes and utilities for haskell.
+Bootstrap(3) classes and utilities for haskell. This library is a direct port of purescript's purescript-halogen-bootsrap.
 
 # example
 
