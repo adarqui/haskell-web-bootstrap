@@ -2,7 +2,7 @@
 
 ![Bootstrap logo](/assets/logo.jpg?raw=true "Bootstrap logo")
 
-Bootstrap(3) classes and utilities for haskell. This library is a direct port of purescript's purescript-halogen-bootsrap.
+Bootstrap(3) classes and utilities for Haskell. This library is a direct port of purescript's purescript-halogen-bootsrap.
 
 # example
 
