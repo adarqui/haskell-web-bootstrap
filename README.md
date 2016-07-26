@@ -20,13 +20,13 @@ viewIndex Store{..} = do
       PageNumbers.view_ (_pageInfo, routeWith' $ Organizations Index)
       ul_ [className_ B.listUnstyled] $ do
         mapM_ (\OrganizationPackResponse{..} -> do
-          let organization = organizationPackResponseOrganization
+          let OrganizationResponse{..} = organizationPackResponseOrganization
           li_ $ do
             div_ [className_ B.row] $ do
               div_ [className_ B.colXs1] $ p_ $ Gravatar.viewUser_ XSmall organizationPackResponseUser
-              div_ [className_ B.colXs3] $ p_ $ ahrefName (organizationResponseDisplayName organization) (routeWith' $ Organizations (ShowS $ organizationResponseName organization))
-              div_ [className_ B.colXs6] $ p_ $ elemText $ maybe "No Description." id (organizationResponseDescription organization)
-              div_ [className_ B.colXs2] $ p_ $ elemText $ prettyUTCTimeMaybe $ organizationResponseCreatedAt organization
+              div_ [className_ B.colXs3] $ p_ $ ahrefName organizationResponseDisplayName (routeWith' $ Organizations (ShowS organizationResponseName))
+              div_ [className_ B.colXs6] $ p_ $ elemText $ maybe "No Description." id organizationResponseDescription
+              div_ [className_ B.colXs2] $ p_ $ elemText $ prettyUTCTimeMaybe organizationResponseCreatedAt
           ) organizations
 ```
 
