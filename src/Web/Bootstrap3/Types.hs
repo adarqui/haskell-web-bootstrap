@@ -16,5 +16,5 @@ type ClassName = forall a. IsString a => a
 
 
 
-className :: IsString a => a -> a
+className :: a -> a
 className = id
